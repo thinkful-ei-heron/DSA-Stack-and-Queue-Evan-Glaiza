@@ -56,15 +56,13 @@ function isEmpty(list){
 }
 
 function display(list) {
-    let currNode = list.first;
-    let str=[];
+    let currNode = list.top;
 
-   while(currNode !==null) {
-       str.unshift(currNode.value);
+   while(currNode) {
+       console.log(currNode.data);
        currNode = currNode.next;
    }
-    console.log(str);
-    return str;
+   return;
 }
 
 //#3
@@ -141,6 +139,49 @@ function sort(list) {
     return display(sortStack);
 }
 
+class QueueMaker {
+    constructor() {
+        this.bucketA = new Stack();
+        this.bucketB = new Stack();
+    }
+    enqueue(value) {
+        this.bucketA.push(value);
+    }
+    show(){
+        display(this.bucketA);
+    }
+    dequeue() {
+        while(this.bucketA.top) {
+            this.bucketB.push(this.bucketA.pop());
+        }
+        let getItem = this.bucketB.pop();
+        while(this.bucketB.top){
+            this.bucketA.push(this.bucketB.pop());
+        }
+        return getItem;
+    }
+    sortQueue(){
+        while(this.bucketA.top) {
+            if(isEmpty(this.bucketB)){
+                this.bucketB.push(this.bucketA.pop());
+            }
+            let temp = this.bucketA.pop();
+            if((peek(this.bucketB) > temp)){
+                this.bucketB.push(temp);
+            }
+            else if(temp > peek(this.bucketA)){
+                this.bucketB.push(this.bucketA.pop());
+            }
+            else if((peek(this.bucketB) < temp)) {
+                this.bucketA.push(this.bucketB.pop());
+                this.bucketB.push(temp);
+                this.bucketB.push(this.bucketA.pop());
+            }
+        }
+        display(this.bucketB);
+    }
+}
+
 function main(){
     // let starTrek = new Stack();
     // starTrek.push('Kirk');
@@ -167,13 +208,28 @@ function main(){
     // parentheses('(aa) (bb ) cc) '));
 
     //5.Sort stack
-    let origStack = new Stack();
-    origStack.push(2); //first
-    origStack.push(6);
-    origStack.push(3);
-    origStack.push(5); //last 
-    // display(origStack);
-    sort(origStack);
+    // let origStack = new Stack();
+    // origStack.push(2); //first
+    // origStack.push(6);
+    // origStack.push(3);
+    // origStack.push(5); //last 
+    // // display(origStack);
+    // sort(origStack);
+
+    let starTrek = new QueueMaker();
+    starTrek.enqueue(1);
+    starTrek.enqueue(4);
+    starTrek.enqueue(2);
+    starTrek.enqueue(6);
+    starTrek.enqueue(3);
+    // starTrek.dequeue();
+    // starTrek.dequeue();
+    starTrek.show();
+    starTrek.sortQueue(starTrek);
+    // console.log(starTrek);
+    // starTrek.push('Spock');
+    // starTrek.push('McCoy');
+    // starTrek.push('Scotty');
 }
 
 main();
