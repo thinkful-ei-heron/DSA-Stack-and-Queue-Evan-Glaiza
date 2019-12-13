@@ -71,15 +71,56 @@ function display(list) {
     return str;
 }
 
-function is_palindrome(s) {
-    s = s.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
-    // Your code goes here
-   let arr = [];
-   for(let i=0; i<arr.length; i++){
-       arr +
+function is_palindrome(str) {
+    str = str.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
+ 
+   let stack = new Stack();
+    let result = '';
+   for(let i=0; i<str.length; i++){
+       stack.push(str[i]);
    }
+   
+   while(stack.top) {
+    result += stack.pop();
+    console.log('result' +result);
+   }
+
+   if(result === str){
+       return true;
+   }
+   return false;
 }
 
+function parentheses(str){
+    let stack = new Stack();
+
+    for(let i=0; i<str.length; i++){
+        stack.push(str[i]);
+    }
+
+    let leftCnt = 0;
+    let rightCnt = 0;
+
+    while(stack.top) {
+        let check= stack.pop();
+
+        if(check === '(') {
+            leftCnt++;
+        }
+        if(check ===')') {
+            rightCnt++;
+        }
+    }
+    console.log('left' + leftCnt + 'right' + rightCnt );
+
+    if(leftCnt > rightCnt) {
+        return `You are missing ${leftCnt - rightCnt} )`;
+    } 
+    if(rightCnt > leftCnt) {
+        return `You are missing ${rightCnt - leftCnt} (`;
+    }
+
+}
 
 function main(){
     let starTrek = new Stack();
@@ -87,6 +128,8 @@ function main(){
     starTrek.push('Spock');
     starTrek.push('McCoy');
     starTrek.push('Scotty');
+
+    //2. Useful methods for a stack
     // console.log(peek(starTrek));
     // console.log(isEmpty(starTrek)); 
     //display(starTrek); 
@@ -95,10 +138,14 @@ function main(){
     // display(starTrek); 
     // console.log(starTrek);
 
+    //3. Check for palindromes using a stack
     // console.log(is_palindrome('dad'));
     // console.log(is_palindrome("A man, a plan, a canal: Panama"));
-    console.log(is_palindrome("1001"));
+    // console.log(is_palindrome("1001"));
     // console.log(is_palindrome("Tauhida"));
+
+    //4. Matching parentheses in an expression
+    console.log(parentheses('te(s)t[in[g]'));
 }
 
 main();
