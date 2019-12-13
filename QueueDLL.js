@@ -1,31 +1,32 @@
 class _Node {
-    constructor(value) {
+    constructor(value,prev) {
         this.value = value;
         this.next = null;
+        this.prev = prev;
     }
 }
 
-class Queue {
+class QueueDLL {
     constructor(){
         this.first = null;
         this.last = null;
     }
-    //complexity of inserting in a queue is constant, O(1)
+
     enqueue(data) {
         const node = new _Node(data);
 
         if(this.first === null) {
             this.first = node;
+            node.prev = null;
         }
         if(this.last) {
             this.last.next = node;
+            node.prev = this.last;
         }
         //make the new node the last item on the queue
         this.last = node;
     }
 
-    //complexity of inserting in a queue is constant, O(1)
-    //we can also use shift() method to implement dequeue
     dequeue() {
         //if the queue is empty, there is nothing to return
         if(this.first === null) {
@@ -43,6 +44,7 @@ class Queue {
 }
 
 function peek(queue){
+    if(!queue.first) return 'Queue is empty';
     return queue.first.value;
 }
 
@@ -66,32 +68,39 @@ function displayQueue(queue) {
 
 }
 
-
 function main(){
-let starTrek = new Queue();
+    let starTrek = new QueueDLL();
+    
+    starTrek.enqueue('Kirk');
+    starTrek.enqueue('Spock');
+    starTrek.enqueue('Uhura');
+    starTrek.enqueue('Sulu');
+    starTrek.enqueue('Checkov');
 
-starTrek.enqueue('Kirk');
-starTrek.enqueue('Spock');
-starTrek.enqueue('Uhura');
-starTrek.enqueue('Sulu');
-starTrek.enqueue('Checkov');
-// console.log(starTrek);
+    //removing 'Spock'
+    starTrek.dequeue();
+    starTrek.dequeue();
+    displayQueue(starTrek);
 
-// console.log(peek(starTrek));
-// console.log(isEmpty(starTrek));
+    //#7 Uhura will be the first after dequeuing
 
-// displayQueue(starTrek);
-
-//removing Spock
-// starTrek.dequeue();
-// starTrek.dequeue();
-// displayQueue(starTrek);
-
-
-}
-main();
-
-module.exports = {
-    _Node,
-    Queue
-};
+    // console.log(starTrek);
+    
+    // console.log(peek(starTrek));
+    // console.log(isEmpty(starTrek));
+    
+    // displayQueue(starTrek);
+    
+    //removing Spock
+    // starTrek.dequeue();
+    // starTrek.dequeue();
+    // displayQueue(starTrek);
+    
+    
+    }
+    main();
+    
+    module.exports = {
+        _Node,
+        QueueDLL
+    };

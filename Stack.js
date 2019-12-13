@@ -56,11 +56,11 @@ function isEmpty(list){
 }
 
 function display(list) {
-    let currNode = list.top;
+    let currNode = list.first;
     let str=[];
 
    while(currNode !==null) {
-       str.unshift(currNode.data);
+       str.unshift(currNode.value);
        currNode = currNode.next;
    }
     console.log(str);
