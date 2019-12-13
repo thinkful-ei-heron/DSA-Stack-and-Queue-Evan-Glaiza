@@ -44,15 +44,11 @@ class Stack {
 }
 
 function peek(list){
-    if(list) {
-        return list.top.data;
-    } else {
-        return 'no record';
-    }
+    return list.top.data;
 }
 
 function isEmpty(list){
-    if(!list) {
+    if(!list.top) {
         return true;
     }else {
         return false;
@@ -71,6 +67,7 @@ function display(list) {
     return str;
 }
 
+//#3
 function is_palindrome(str) {
     str = str.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
  
@@ -91,6 +88,7 @@ function is_palindrome(str) {
    return false;
 }
 
+//#4
 function parentheses(str){
     str = str.replace(/\s+/g, ''); //remove spaces
     let stack = new Stack();
@@ -128,12 +126,27 @@ function parentheses(str){
 
 }
 
+//#5 
+function sort(list) {
+ 
+    let sortStack = new Stack();
+
+    while(!isEmpty(list)) {
+        let x = list.pop();
+        while(!isEmpty(sortStack) && x > peek(sortStack)) {
+            list.push(sortStack.pop());
+        }
+        sortStack.push(x);
+    }
+    return display(sortStack);
+}
+
 function main(){
-    let starTrek = new Stack();
-    starTrek.push('Kirk');
-    starTrek.push('Spock');
-    starTrek.push('McCoy');
-    starTrek.push('Scotty');
+    // let starTrek = new Stack();
+    // starTrek.push('Kirk');
+    // starTrek.push('Spock');
+    // starTrek.push('McCoy');
+    // starTrek.push('Scotty');
 
     //2. Useful methods for a stack
     // console.log(peek(starTrek));
@@ -151,7 +164,16 @@ function main(){
     // console.log(is_palindrome("Tauhida"));
 
     //4. Matching parentheses in an expression
-    console.log(parentheses('(aa) (bb ) cc) '));
+    // parentheses('(aa) (bb ) cc) '));
+
+    //5.Sort stack
+    let origStack = new Stack();
+    origStack.push(2); //first
+    origStack.push(6);
+    origStack.push(3);
+    origStack.push(5); //last 
+    // display(origStack);
+    sort(origStack);
 }
 
 main();
