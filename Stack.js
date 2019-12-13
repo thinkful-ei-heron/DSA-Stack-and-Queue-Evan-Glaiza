@@ -92,33 +92,39 @@ function is_palindrome(str) {
 }
 
 function parentheses(str){
+    str = str.replace(/\s+/g, ''); //remove spaces
     let stack = new Stack();
 
     for(let i=0; i<str.length; i++){
         stack.push(str[i]);
     }
 
-    let leftCnt = 0;
-    let rightCnt = 0;
+    let currNode = stack.top;
 
-    while(stack.top) {
-        let check= stack.pop();
+    let open = [];
+    let close = [];
+    let idx = 1;
 
-        if(check === '(') {
-            leftCnt++;
+    while(currNode) {
+        if(currNode.data === '(') {
+            open.push(idx);
         }
-        if(check ===')') {
-            rightCnt++;
+        if(currNode.data ===')') {
+            close.push(idx);
         }
+        currNode = currNode.next;
+        idx++;
     }
-    console.log('left' + leftCnt + 'right' + rightCnt );
+    console.log('open: ' + open + 'close: ' + close );
 
-    if(leftCnt > rightCnt) {
-        return `You are missing ${leftCnt - rightCnt} )`;
-    } 
-    if(rightCnt > leftCnt) {
-        return `You are missing ${rightCnt - leftCnt} (`;
+    if(open.length > close.length) {
+        return 'Unmatched closing parenthesis at index number' + open.pop();
+    } else if( close.length > open.length) {
+        return 'Unmatched closing parenthesis at index number' + close.pop();
+    } else {
+        return 'match';
     }
+
 
 }
 
@@ -133,8 +139,8 @@ function main(){
     // console.log(peek(starTrek));
     // console.log(isEmpty(starTrek)); 
     //display(starTrek); 
-    starTrek.pop('');
-    starTrek.pop('');
+    //starTrek.pop('');
+    //starTrek.pop('');
     // display(starTrek); 
     // console.log(starTrek);
 
@@ -145,7 +151,7 @@ function main(){
     // console.log(is_palindrome("Tauhida"));
 
     //4. Matching parentheses in an expression
-    console.log(parentheses('te(s)t[in[g]'));
+    console.log(parentheses('(aa) (bb ) cc) '));
 }
 
 main();
