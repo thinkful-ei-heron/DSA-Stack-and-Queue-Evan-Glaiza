@@ -66,30 +66,80 @@ function displayQueue(queue) {
 
 }
 
+//#9
+function dancer(queue) {
+    let fQueue = new Queue();
+    let mQueue = new Queue();
 
-function main(){
-let starTrek = new Queue();
-
-starTrek.enqueue('Kirk');
-starTrek.enqueue('Spock');
-starTrek.enqueue('Uhura');
-starTrek.enqueue('Sulu');
-starTrek.enqueue('Checkov');
-// console.log(starTrek);
-
-// console.log(peek(starTrek));
-// console.log(isEmpty(starTrek));
-
-// displayQueue(starTrek);
-
-//removing Spock
-// starTrek.dequeue();
-// starTrek.dequeue();
-// displayQueue(starTrek);
-
-
+    if(!isEmpty(queue)) {
+        
+        // let g = queue.value.charAt(0);
+        console.log('not empty');
+    }
+    
 }
-main();
+
+//#10
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    min = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function ophidian(queue){
+    while(queue.first !==null) {
+        let chance = getRandomInt(0, 101);
+        if(chance <= 25) {
+            console.log(`${peek(queue)}'s paperwork wasn't correct and they got sent to the back of the line.`);
+            let temp = queue.dequeue();
+            queue.enqueue(temp);
+        }else {
+            console.log(`${peek(queue)}'s all done with their business at the Ophidian Bank. Bye ${peek(queue)}!`);
+            queue.dequeue();
+        }
+    }
+}
+
+function maintwo(){
+let people = new Queue();
+
+people.enqueue('Jane');
+people.enqueue('Frank');
+people.enqueue('John');
+people.enqueue('Sherlock');
+ophidian(people);
+}
+maintwo();
+
+
+// function main(){
+// let starTrek = new Queue();
+
+// starTrek.enqueue('F Jane');
+// dancer(starTrek);
+// // displayQueue(starTrek);
+// // // starTrek.enqueue('Kirk');
+// // // starTrek.enqueue('Spock');
+// // // displayQueue(starTrek);
+// // // starTrek.enqueue('Uhura');
+// // // starTrek.enqueue('Sulu');
+// // // starTrek.enqueue('Checkov');
+// // // console.log(starTrek);
+
+// // // console.log(peek(starTrek));
+// // // console.log(isEmpty(starTrek));
+
+// // // displayQueue(starTrek);
+
+// // //removing Spock
+// // // starTrek.dequeue();
+// // // starTrek.dequeue();
+// // // displayQueue(starTrek);
+
+// }
+// main();
+
+
 
 module.exports = {
     _Node,
